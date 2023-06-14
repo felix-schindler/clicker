@@ -3,7 +3,7 @@ import { Head } from "$fresh/runtime.ts";
 import Counter from "../islands/Counter.tsx";
 import SocketClient from "../islands/SocketClient.tsx";
 import SocketCounter from "../islands/SocketCounter.tsx";
-import { getCount } from "../utils/db.ts";
+import CounterModel from "../utils/db.ts";
 
 interface HomeProps {
 	start: number;
@@ -11,9 +11,7 @@ interface HomeProps {
 
 export const handler: Handlers<HomeProps> = {
 	async GET(_req, ctx) {
-		let start = await getCount();
-		if (start === null) start = 3;
-		return ctx.render({ start });
+		return ctx.render({ start: await CounterModel.shared.getCount() });
 	},
 };
 

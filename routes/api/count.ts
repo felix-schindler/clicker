@@ -1,5 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import { getCount, setCount } from "../../utils/db.ts";
+import Counter from "../../utils/db.ts";
+
+const db = Counter.shared;
 
 export const handler: Handlers = {
 	GET(req) {
@@ -10,29 +12,33 @@ export const handler: Handlers = {
 		const { socket, response } = Deno.upgradeWebSocket(req);
 
 		socket.onopen = (_event) => {
-			console.log("Client connected");
+			Counter.shared.addEventListener("count", (event) => {
+				console.log("Count Event", event);
+				// @ts-ignore - Detail exists
+				socket.send(event.detail.count.toString());
+			});
 		};
 
 		socket.onmessage = async (event) => {
-			let newCount = await getCount() ?? 0;
+			let newCount = await db.getCount();
 
 			switch (event.data) {
 				case "get": {
-					socket.send(newCount.toString());
+					socket.send(db.toString());
 					break;
 				}
 				case "increment": {
-					await setCount(++newCount);
+					await db.setCount(++newCount);
 					socket.send(newCount.toString());
 					break;
 				}
 				case "decrement": {
-					await setCount(--newCount);
+					await db.setCount(--newCount);
 					socket.send(newCount.toString());
 					break;
 				}
 				case "reset": {
-					await setCount(0);
+					await db.setCount(0);
 					socket.send("0");
 					break;
 				}
@@ -40,18 +46,18 @@ export const handler: Handlers = {
 					socket.send("Unknown event");
 					break;
 			}
-		}
+		};
 
 		return response;
 	},
 	async POST(req) {
 		const increment = Boolean(new URL(req.url).searchParams.get("increment"));
-		let newCount = await getCount() ?? 0;
+		let newCount = await db.getCount();
 
 		if (increment) {
-			await setCount(++newCount);
+			await db.setCount(++newCount);
 		} else {
-			await setCount(--newCount);
+			await db.setCount(--newCount);
 		}
 
 		return new Response(newCount.toString());
