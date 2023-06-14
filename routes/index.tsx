@@ -24,15 +24,15 @@ export default function Home(props: PageProps<HomeProps>) {
 			</Head>
 			<body class="bg-green-200 dark:bg-green-900">
 				<div class="p-4 mx-auto max-w-screen-md flex flex-col gap-2">
-					<div>
+					<div class="flex flex-col items-center">
 						<img
-							src="/logo.svg"
-							class="w-32 h-32"
-							alt="the fresh logo: a sliced lemon dripping with juice"
+							src="https://dash.deno.com/assets/logo.svg"
+							class="w-32 h-32 mb-3"
+							alt="the deno logo: a dino in the rain"
 						/>
-						<p class="my-6">
-							Welcome to{" "}
-							<code>fresh</code>. Try updating this message in the
+						<p>Welcome to my <span class="font-serif">Counter</span></p>
+						<p class="text-gray-700 dark:text-gray-300">
+							Try updating this message in the
 							./routes/index.tsx file, and refresh.
 						</p>
 					</div>

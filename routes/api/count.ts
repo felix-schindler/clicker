@@ -14,8 +14,10 @@ export const handler: Handlers = {
 		socket.onopen = (_event) => {
 			Counter.shared.addEventListener("count", (event) => {
 				console.log("Count Event", event);
-				// @ts-ignore - Detail exists
-				socket.send(event.detail.count.toString());
+				if (socket.readyState === WebSocket.OPEN) {
+					// @ts-ignore - Detail exists
+					socket.send(event.detail.count.toString());
+				}
 			});
 		};
 
