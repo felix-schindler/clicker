@@ -20,7 +20,7 @@ export default function SocketClient() {
 	}
 
 	ws.onopen = () => {
-		ws.send("get")
+		ws.send("get");
 	};
 
 	ws.onmessage = (event) => {
