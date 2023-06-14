@@ -4,19 +4,25 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/api/count.ts";
-import * as $1 from "./routes/index.tsx";
+import * as $1 from "./routes/api/ping.ts";
+import * as $2 from "./routes/index.tsx";
 import * as $$0 from "./islands/Counter.tsx";
+import * as $$1 from "./islands/SocketClient.tsx";
+import * as $$2 from "./islands/SocketCounter.tsx";
 
 const manifest = {
-  routes: {
-    "./routes/api/count.ts": $0,
-    "./routes/index.tsx": $1,
-  },
-  islands: {
-    "./islands/Counter.tsx": $$0,
-  },
-  baseUrl: import.meta.url,
-  config,
+	routes: {
+		"./routes/api/count.ts": $0,
+		"./routes/api/ping.ts": $1,
+		"./routes/index.tsx": $2,
+	},
+	islands: {
+		"./islands/Counter.tsx": $$0,
+		"./islands/SocketClient.tsx": $$1,
+		"./islands/SocketCounter.tsx": $$2,
+	},
+	baseUrl: import.meta.url,
+	config,
 };
 
 export default manifest;
