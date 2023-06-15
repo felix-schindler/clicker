@@ -2,7 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import type { Message } from "../utils/db.ts";
 
 import IconTrash from "icons/trash.tsx";
-import IconMessageOff from "icons/message-off.tsx"
+import IconMessageOff from "icons/message-off.tsx";
 
 export default function MessageList(props: { messages: Message[] }) {
 	const [messages, setMessages] = useState<Message[]>(props.messages);
@@ -51,7 +51,11 @@ export default function MessageList(props: { messages: Message[] }) {
 		<>
 			<h2 class="text-xl font-bold">Messages</h2>
 			{messages.length === 0
-				? <p class="flex gap-1"><IconMessageOff /> No messages, create one above</p>
+				? (
+					<p class="flex gap-1">
+						<IconMessageOff /> No messages, create one above
+					</p>
+				)
 				: (
 					<ul class="divide-y">
 						{messages.map((msg) => {
