@@ -8,10 +8,9 @@ import * as $1 from "./routes/api/messages.ts";
 import * as $2 from "./routes/api/ping.ts";
 import * as $3 from "./routes/index.tsx";
 import * as $4 from "./routes/messages.tsx";
-import * as $$0 from "./islands/Counter.tsx";
-import * as $$1 from "./islands/MessageList.tsx";
-import * as $$2 from "./islands/SocketCounter.tsx";
-import * as $$3 from "./islands/SocketPing.tsx";
+import * as $$0 from "./islands/MessageList.tsx";
+import * as $$1 from "./islands/SocketCounter.tsx";
+import * as $$2 from "./islands/SocketPing.tsx";
 
 const manifest = {
 	routes: {
@@ -22,10 +21,9 @@ const manifest = {
 		"./routes/messages.tsx": $4,
 	},
 	islands: {
-		"./islands/Counter.tsx": $$0,
-		"./islands/MessageList.tsx": $$1,
-		"./islands/SocketCounter.tsx": $$2,
-		"./islands/SocketPing.tsx": $$3,
+		"./islands/MessageList.tsx": $$0,
+		"./islands/SocketCounter.tsx": $$1,
+		"./islands/SocketPing.tsx": $$2,
 	},
 	baseUrl: import.meta.url,
 	config,

@@ -2,7 +2,6 @@ import type { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { CounterModel } from "../utils/db.ts";
 
-import Counter from "../islands/Counter.tsx";
 import SocketPing from "../islands/SocketPing.tsx";
 import SocketCounter from "../islands/SocketCounter.tsx";
 import NavLink from "../components/NavLink.tsx";
@@ -64,27 +63,20 @@ export default function Home(props: PageProps<HomeProps>) {
 				</header>
 				<div class="p-4 flex flex-col gap-4">
 					<div>
-						<h2 class="text-xl font-bold">Socket Counter</h2>
+						<div class="flex flex-wrap gap-2 items-baseline">
+							<h2 class="text-xl font-bold">Counter</h2>
+							<p class="text-sm text-gray-700 dark:text-gray-300">
+								Realtime across the world
+							</p>
+						</div>
 						<SocketCounter start={props.data.start} />
 					</div>
 					<details>
 						<summary class="cursor-pointer">Ping socket server</summary>
 						<div class="mt-1">
-							<h2 class="text-xl font-bold">Socket</h2>
 							<SocketPing />
 							<p class="text-sm text-gray-700 dark:text-gray-300">
 								If the Socker Counter doesn't update, try to ping the server
-							</p>
-						</div>
-					</details>
-					<details>
-						<summary class="cursor-pointer">Non-realtime counter</summary>
-						<div class="mt-1">
-							<h2 class="text-xl font-bold">Counter</h2>
-							<Counter start={props.data.start} />
-							<p class="text-sm text-gray-700 dark:text-gray-300">
-								Go slow on this one, clicking too fast might crash the website
-								on your browser
 							</p>
 						</div>
 					</details>
