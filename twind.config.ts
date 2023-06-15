@@ -5,7 +5,12 @@ export default {
 	theme: {
 		extend: {
 			gridTemplateRows: {
-				"hmf": "auto 1fr auto",
+				"hmf": "auto 1fr auto", // my standard header - main - footer layout
+			},
+			colors: {
+				green: {
+					950: "#052e16", // in tailwind but not twind(?)
+				},
 			},
 		},
 	},
