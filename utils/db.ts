@@ -1,5 +1,3 @@
-import Filter from "npm:bad-words";
-
 const kv = await Deno.openKv();
 
 export class CounterModel extends EventTarget {
@@ -36,7 +34,6 @@ export class CounterModel extends EventTarget {
 export class MessageModel extends EventTarget {
 	public static shared = new MessageModel();
 	private PREFIX = "messages";
-	private filter = new Filter();
 
 	private constructor() {
 		super();
@@ -73,9 +70,11 @@ export class MessageModel extends EventTarget {
 	 */
 	async addMessage(content: string): Promise<string> {
 		// Remove bad words
-		try {
-			content = this.filter.clean(content);
-		} catch { /* Sometimes this crashes 🤷🏻‍♀️ (e. g. content === "$$$") */ }
+		// try {
+		// 	import Filter from "npm:bad-words";
+		// 	private filter = new Filter();
+		// 		content = this.filter.clean(content);
+		// } catch { /* Sometimes this crashes 🤷🏻‍♀️ (e. g. content === "$$$") */ }
 
 		// Create unique id
 		const id = Date.now() + crypto.randomUUID().split("-")[0];
