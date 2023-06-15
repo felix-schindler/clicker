@@ -27,9 +27,9 @@ export default function SocketClient(props: { messages: string[] }) {
 	return (
 		<>
 			<h2 class="text-xl font-bold">Messages</h2>
-			<ul>
+			<ul class="divide-y">
 				{messages.map((msg) => {
-					return <li>{msg}</li>;
+					return <li class="py-1">{msg}</li>;
 				})}
 			</ul>
 		</>

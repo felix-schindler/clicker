@@ -12,7 +12,7 @@ export default function NewMessage() {
 				name="message"
 				placeholder="Today I learned..."
 				rows={3}
-				class="w-1/2 border(green-500 1) rounded-md px-2 py-1"
+				class="w-full sm:w-3/4 md:w-1/2 border(green-500 1) rounded-md px-2 py-1"
 			>
 			</textarea>
 			<div class="flex gap-1 flex-wrap">
