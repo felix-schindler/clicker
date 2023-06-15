@@ -30,15 +30,24 @@ export default function SocketClient(props: { start: number }) {
 	}
 
 	function increment() {
-		ws.send("increment");
+		if (ws.readyState === WebSocket.OPEN)
+			ws.send("increment");
+		else
+			console.error("Socket connection is not open")
 	}
 
 	function decrement() {
-		ws.send("decrement");
+		if (ws.readyState === WebSocket.OPEN)
+			ws.send("decrement");
+		else
+			console.error("Socket connection is not open")
 	}
 
 	function reset() {
-		ws.send("reset");
+		if (ws.readyState === WebSocket.OPEN)
+			ws.send("reset");
+		else
+			console.error("Socket connection is not open")
 	}
 
 	return (

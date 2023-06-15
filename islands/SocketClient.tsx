@@ -24,7 +24,10 @@ export default function SocketClient() {
 	}
 
 	function sendPing() {
-		ws.send("ping");
+		if (ws.readyState === WebSocket.OPEN)
+			ws.send("ping");
+		else
+			console.error("Socket connection is not open")
 	}
 
 	return (
