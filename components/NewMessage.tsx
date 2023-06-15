@@ -16,7 +16,7 @@ export default function NewMessage() {
 			>
 			</textarea>
 			<div class="flex gap-1 flex-wrap">
-				<Button type="submit" serverAllowed={true}>Send</Button>
+				<Button type="submit" serverAllowed={true}>Add</Button>
 				<Button type="reset" danger={true} serverAllowed={true}>Clear</Button>
 			</div>
 		</form>
