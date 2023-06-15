@@ -23,6 +23,10 @@ export default function SocketPing() {
 		};
 	}
 
+	function reset() {
+		setAnswer("/");
+	}
+
 	function sendPing() {
 		if (ws.readyState === WebSocket.OPEN) {
 			ws.send("ping");
@@ -34,6 +38,7 @@ export default function SocketPing() {
 	return (
 		<div class="flex items-center gap-2 w-full">
 			<p class="flex-grow-1 text-lg font-mono">{answer}</p>
+			<Button onClick={reset} danger={true}>Reset</Button>
 			<Button onClick={sendPing}>Ping!</Button>
 		</div>
 	);
