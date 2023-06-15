@@ -2,7 +2,7 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import { useState } from "preact/hooks";
 import { Button } from "../components/Button.tsx";
 
-export default function SocketClient() {
+export default function SocketPing() {
 	const [answer, setAnswer] = useState("/");
 
 	let ws: WebSocket;
@@ -24,10 +24,11 @@ export default function SocketClient() {
 	}
 
 	function sendPing() {
-		if (ws.readyState === WebSocket.OPEN)
+		if (ws.readyState === WebSocket.OPEN) {
 			ws.send("ping");
-		else
-			console.error("Socket connection is not open")
+		} else {
+			console.error("Socket connection is not open");
+		}
 	}
 
 	return (
