@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import type { Message } from "../utils/db.ts";
 
 import IconTrash from "icons/trash.tsx";
+import IconMessageOff from "icons/message-off.tsx"
 
 export default function MessageList(props: { messages: Message[] }) {
 	const [messages, setMessages] = useState<Message[]>(props.messages);
@@ -49,22 +50,26 @@ export default function MessageList(props: { messages: Message[] }) {
 	return (
 		<>
 			<h2 class="text-xl font-bold">Messages</h2>
-			<ul class="divide-y">
-				{messages.map((msg) => {
-					return (
-						<li class="flex flex-wrap py-1">
-							<span class="flex-grow">{msg.content}</span>
-							<button
-								class="text-red-500"
-								type="button"
-								onClick={() => deleteMsg(msg.id)}
-							>
-								<IconTrash class="w-6 h-6" />
-							</button>
-						</li>
-					);
-				})}
-			</ul>
+			{messages.length === 0
+				? <p class="flex gap-1"><IconMessageOff /> No messages, create one above</p>
+				: (
+					<ul class="divide-y">
+						{messages.map((msg) => {
+							return (
+								<li class="flex flex-wrap py-1">
+									<span class="flex-grow">{msg.content}</span>
+									<button
+										class="text-red-500"
+										type="button"
+										onClick={() => deleteMsg(msg.id)}
+									>
+										<IconTrash class="w-6 h-6" />
+									</button>
+								</li>
+							);
+						})}
+					</ul>
+				)}
 		</>
 	);
 }
