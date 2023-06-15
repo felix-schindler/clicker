@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import CounterModel from "../../utils/db.ts";
+import { CounterModel } from "../../utils/db.ts";
 
 const db = CounterModel.shared;
 
