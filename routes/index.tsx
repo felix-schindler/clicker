@@ -20,11 +20,17 @@ export default function Home(props: PageProps<HomeProps>) {
 		<>
 			<Head>
 				<title>Counter</title>
+				{/* "PWA" */}
 				<meta name="color-scheme" content="dark light" />
+				<meta name="theme-color" media="(prefers-color-scheme: light)" content="#dcfce7" />
+				<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14532d" />
+				{/* SEO */}
+				<meta name="author" content="Felix Schindler" />
+				<meta name="description" content="A simple counter. Realtime around the world" />
 			</Head>
 			<body class="min-h-screen max-w-screen-md mx-auto
 				grid grid-rows-hmf
-				bg-green-200 dark:bg-green-900
+				bg-green-100 dark:bg-green-900
 			">
 				<header class="p-4 text-center">
 					<img
