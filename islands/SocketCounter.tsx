@@ -30,24 +30,27 @@ export default function SocketClient(props: { start: number }) {
 	}
 
 	function increment() {
-		if (ws.readyState === WebSocket.OPEN)
+		if (ws.readyState === WebSocket.OPEN) {
 			ws.send("increment");
-		else
-			console.error("Socket connection is not open")
+		} else {
+			console.error("Socket connection is not open");
+		}
 	}
 
 	function decrement() {
-		if (ws.readyState === WebSocket.OPEN)
+		if (ws.readyState === WebSocket.OPEN) {
 			ws.send("decrement");
-		else
-			console.error("Socket connection is not open")
+		} else {
+			console.error("Socket connection is not open");
+		}
 	}
 
 	function reset() {
-		if (ws.readyState === WebSocket.OPEN)
+		if (ws.readyState === WebSocket.OPEN) {
 			ws.send("reset");
-		else
-			console.error("Socket connection is not open")
+		} else {
+			console.error("Socket connection is not open");
+		}
 	}
 
 	return (

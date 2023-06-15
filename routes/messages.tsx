@@ -1,23 +1,38 @@
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import { CounterModel } from "../utils/db.ts";
+import { MessageModel } from "../utils/db.ts";
 
-import Counter from "../islands/Counter.tsx";
-import SocketPing from "../islands/SocketPing.tsx";
-import SocketCounter from "../islands/SocketCounter.tsx";
+import MessageList from "../islands/MessageList.tsx";
+import NewMessage from "../components/NewMessage.tsx";
 import NavLink from "../components/NavLink.tsx";
 
-interface HomeProps {
-	start: number;
+interface MessagePageProps {
+	messages: string[];
 }
 
-export const handler: Handlers<HomeProps> = {
+export const handler: Handlers<MessagePageProps> = {
 	async GET(_req, ctx) {
-		return ctx.render({ start: await CounterModel.shared.getCount() });
+		return ctx.render({ messages: await MessageModel.shared.getMessages() });
+	},
+	async POST(req, ctx) {
+		const body = await req.formData();
+		const msg = body.get("message");
+
+		// Empty message -> return status code 400
+		if (!msg || typeof msg !== "string" || msg.length === 0) {
+			return new Response("Message cannot be empty and has to be a string", {
+				status: 400,
+			});
+		}
+
+		// Add message to the database
+		await MessageModel.shared.addMessage(msg);
+
+		return ctx.render({ messages: await MessageModel.shared.getMessages() });
 	},
 };
 
-export default function Home(props: PageProps<HomeProps>) {
+export default function MessagePage(props: PageProps<MessagePageProps>) {
 	return (
 		<>
 			<Head>
@@ -32,7 +47,7 @@ export default function Home(props: PageProps<HomeProps>) {
 				<meta
 					name="theme-color"
 					media="(prefers-color-scheme: dark)"
-					content="#052e16"
+					content="#14532d"
 				/>
 				{/* SEO */}
 				<meta name="author" content="Felix Schindler" />
@@ -57,37 +72,18 @@ export default function Home(props: PageProps<HomeProps>) {
 					<p class="text-gray-700 dark:text-gray-300">
 						using Deno Deploy, Fresh, Deno KV, BroadcastChannel and WebSockets
 					</p>
-					<nav class="flex gap-2 justify-center mt-2">
-						<NavLink href="/" content="Start" active={true} />
-						<NavLink href="/messages" content="Message board" />
-					</nav>
+					<div class="flex gap-2 justify-center mt-2">
+						<NavLink href="/" content="Start" />
+						<NavLink href="/messages" content="Message board" active={true} />
+					</div>
 				</header>
 				<div class="p-4 flex flex-col gap-4">
 					<div>
-						<h2 class="text-xl font-bold">Socket Counter</h2>
-						<SocketCounter start={props.data.start} />
+						<NewMessage />
 					</div>
-					<details>
-						<summary class="cursor-pointer">Ping socket server</summary>
-						<div class="mt-1">
-							<h2 class="text-xl font-bold">Socket</h2>
-							<SocketPing />
-							<p class="text-sm text-gray-700 dark:text-gray-300">
-								If the Socker Counter doesn't update, try to ping the server
-							</p>
-						</div>
-					</details>
-					<details>
-						<summary class="cursor-pointer">Non-realtime counter</summary>
-						<div class="mt-1">
-							<h2 class="text-xl font-bold">Counter</h2>
-							<Counter start={props.data.start} />
-							<p class="text-sm text-gray-700 dark:text-gray-300">
-								Go slow on this one, clicking too fast might crash the website
-								on your browser
-							</p>
-						</div>
-					</details>
+					<div>
+						<MessageList messages={props.data.messages} />
+					</div>
 				</div>
 				<footer class="p-4">
 					<p>
