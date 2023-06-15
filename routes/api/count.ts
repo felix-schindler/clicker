@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import Counter from "../../utils/db.ts";
+import CounterModel from "../../utils/db.ts";
 
-const db = Counter.shared;
+const db = CounterModel.shared;
 
 export const handler: Handlers = {
 	GET(req) {
@@ -10,33 +10,47 @@ export const handler: Handlers = {
 		}
 
 		const { socket, response } = Deno.upgradeWebSocket(req);
+		const channel = new BroadcastChannel("count");
 
-		socket.onopen = (_event) => {
-			Counter.shared.addEventListener("count", (event) => {
-				console.log("Count Event", event);
-				if (socket.readyState === WebSocket.OPEN) {
-					// @ts-ignore - Detail exists
-					socket.send(event.detail.count.toString());
-				}
-			});
+		// Listen to own count changes
+		db.addEventListener("count", (event) => {
+			// @ts-ignore It's a custom event, detail does exist!
+			const count = event.detail.count;
+
+			// Send count to clients
+			if (socket.readyState === WebSocket.OPEN) {
+				socket.send(count.toString());
+			}
+
+			// Send count to other servers
+			channel.postMessage(count);
+		});
+
+		// Listen count changes on other servers
+		channel.onmessage = (event) => {
+			// Send count to clients
+			if (socket.readyState === WebSocket.OPEN) {
+				socket.send(event.data.toString());
+			}
 		};
 
+		// Listen to client messages
 		socket.onmessage = async (event) => {
-			let newCount = await db.getCount();
+			let count = await db.getCount();
 
 			switch (event.data) {
 				case "get": {
-					socket.send(db.toString());
+					socket.send(count.toString());
 					break;
 				}
 				case "increment": {
-					await db.setCount(++newCount);
-					socket.send(newCount.toString());
+					await db.setCount(++count);
+					socket.send(count.toString());
 					break;
 				}
 				case "decrement": {
-					await db.setCount(--newCount);
-					socket.send(newCount.toString());
+					await db.setCount(--count);
+					socket.send(count.toString());
 					break;
 				}
 				case "reset": {
@@ -54,14 +68,15 @@ export const handler: Handlers = {
 	},
 	async POST(req) {
 		const increment = Boolean(new URL(req.url).searchParams.get("increment"));
-		let newCount = await db.getCount();
+		let count = await db.getCount();
 
 		if (increment) {
-			await db.setCount(++newCount);
+			await db.setCount(++count);
 		} else {
-			await db.setCount(--newCount);
+			await db.setCount(--count);
 		}
 
-		return new Response(newCount.toString());
+		// Response - 200 OK
+		return new Response();
 	},
 };
