@@ -42,12 +42,12 @@ export default function MessagePage(props: PageProps<MessagePageProps>) {
 				<meta
 					name="theme-color"
 					media="(prefers-color-scheme: light)"
-					content="#dcfce7"
+					content="#f0fdf4"
 				/>
 				<meta
 					name="theme-color"
 					media="(prefers-color-scheme: dark)"
-					content="#14532d"
+					content="#052e16"
 				/>
 				{/* SEO */}
 				<meta name="author" content="Felix Schindler" />
