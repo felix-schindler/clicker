@@ -26,10 +26,19 @@ export class CounterModel extends EventTarget {
 		this.dispatchEvent(this.getCountEvent(newCount));
 	}
 
+	/**
+	 * @param count Count to dispatch
+	 * @returns Count event
+	 */
 	private getCountEvent(count: number) {
 		return new CustomEvent<{ count: number }>("count", { detail: { count } });
 	}
 }
+
+export type Message = {
+	id: string;
+	content: string;
+};
 
 export class MessageModel extends EventTarget {
 	public static shared = new MessageModel();
@@ -42,12 +51,12 @@ export class MessageModel extends EventTarget {
 	/**
 	 * @returns All messages
 	 */
-	async getMessages(): Promise<string[]> {
+	async getMessages(): Promise<Message[]> {
 		const messages = [];
 
 		const msgs = kv.list<string>({ prefix: [this.PREFIX] });
 		for await (const msg of msgs) {
-			messages.push(msg.value);
+			messages.push({ id: (msg.key[1] as string), content: msg.value });
 		}
 
 		return messages;
@@ -69,27 +78,25 @@ export class MessageModel extends EventTarget {
 	 * @returns ID of the new message
 	 */
 	async addMessage(content: string): Promise<string> {
-		// Remove bad words
-		// try {
-		// 	import Filter from "npm:bad-words";
-		// 	private filter = new Filter();
-		// 		content = this.filter.clean(content);
-		// } catch { /* Sometimes this crashes 🤷🏻‍♀️ (e. g. content === "$$$") */ }
-
-		// Create unique id
+		// Create "unique" id
 		const id = Date.now() + crypto.randomUUID().split("-")[0];
 
 		await kv.set([this.PREFIX, id], content);
-		this.dispatchEvent(this.getNewMessageEvent(content));
+		this.dispatchEvent(
+			new CustomEvent<Message>("newMessage", { detail: { id, content } }),
+		);
 
 		return id;
 	}
 
 	/**
-	 * @param msg Message to dispatch
-	 * @returns Event to dispatch
+	 * Deletes a message
+	 * @param id ID of the message to delete
 	 */
-	private getNewMessageEvent(msg: string): CustomEvent<string> {
-		return new CustomEvent<string>("newMessage", { detail: msg });
+	async deleteMessage(id: string): Promise<void> {
+		await kv.delete([this.PREFIX, id]);
+		this.dispatchEvent(
+			new CustomEvent<string>("deleteMessage", { detail: id }),
+		);
 	}
 }
