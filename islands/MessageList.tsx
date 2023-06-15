@@ -1,27 +1,47 @@
-import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
+import type { Message } from "../utils/db.ts";
 
-export default function SocketClient(props: { messages: string[] }) {
-	const [messages, setMessages] = useState(props.messages);
+import IconTrash from "icons/trash.tsx";
 
-	let ws: WebSocket;
+export default function MessageList(props: { messages: Message[] }) {
+	const [messages, setMessages] = useState<Message[]>(props.messages);
+	const [ws, setWs] = useState<WebSocket | null>(null);
 
 	// Initialize websocket connection on the client
-	if (IS_BROWSER) {
-		// Get the protocol and host of current server
-		const { protocol, host } = window.location;
+	useEffect(() => {
+		const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+		const host = window.location.host;
 
-		// Use wss if the page is loaded over https
-		const wsProtocol = protocol.includes("s") ? "wss" : "ws";
+		const newWs = new WebSocket(`${wsProtocol}://${host}/api/messages`);
 
-		// Open websocket connection to the server
-		ws = new WebSocket(`${wsProtocol}://${host}/api/messages`);
+		newWs.onmessage = (event) => {
+			const body: unknown = event.data;
 
-		ws.onmessage = (event) => {
-			// Update messages
-			setMessages([event.data, ...messages]);
-			console.log("New message", event.data);
+			if (typeof body === "string" && body.startsWith("delete:")) {
+				// Delete message
+				const id = body.split(":")[1];
+				setMessages(messages.filter((msg) => msg.id !== id));
+			} else {
+				// Add new message
+				const newMsg = body as Message;
+				setMessages([newMsg, ...messages]);
+			}
 		};
+
+		setWs(newWs);
+
+		// Return disconnect function
+		return () => {
+			newWs.close();
+		};
+	}, []);
+
+	function deleteMsg(id: string) {
+		if (ws?.readyState === WebSocket.OPEN) {
+			ws.send(`delete:${id}`);
+		} else {
+			console.error("Websocket is not open");
+		}
 	}
 
 	return (
@@ -29,7 +49,18 @@ export default function SocketClient(props: { messages: string[] }) {
 			<h2 class="text-xl font-bold">Messages</h2>
 			<ul class="divide-y">
 				{messages.map((msg) => {
-					return <li class="py-1">{msg}</li>;
+					return (
+						<li class="flex flex-wrap py-1">
+							<span class="flex-grow">{msg.content}</span>
+							<button
+								class="text-red-500"
+								type="button"
+								onClick={() => deleteMsg(msg.id)}
+							>
+								<IconTrash class="w-6 h-6" />
+							</button>
+						</li>
+					);
 				})}
 			</ul>
 		</>

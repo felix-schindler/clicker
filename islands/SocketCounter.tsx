@@ -1,14 +1,12 @@
-import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { Button } from "../components/Button.tsx";
 
 export default function SocketClient(props: { start: number }) {
 	const [count, setCount] = useState(props.start);
-
-	let ws: WebSocket;
+	const [ws, setWs] = useState<WebSocket | null>(null);
 
 	// Initialize websocket connection on the client
-	if (IS_BROWSER) {
+	useEffect(() => {
 		// Get the protocol and host of current server
 		const { protocol, host } = window.location;
 
@@ -16,21 +14,28 @@ export default function SocketClient(props: { start: number }) {
 		const wsProtocol = protocol.includes("s") ? "wss" : "ws";
 
 		// Open websocket connection to the server
-		ws = new WebSocket(`${wsProtocol}://${host}/api/count`);
+		const newWs = new WebSocket(`${wsProtocol}://${host}/api/count`);
 
-		ws.onopen = () => {
+		newWs.onopen = () => {
 			// Get current count
-			ws.send("get");
+			newWs.send("get");
 		};
 
-		ws.onmessage = (event) => {
+		newWs.onmessage = (event) => {
 			// Update count
 			setCount(event.data);
 		};
-	}
+
+		setWs(newWs);
+
+		// Return disconnect function
+		return () => {
+			newWs.close();
+		};
+	}, []);
 
 	function increment() {
-		if (ws.readyState === WebSocket.OPEN) {
+		if (ws?.readyState === WebSocket.OPEN) {
 			ws.send("increment");
 		} else {
 			console.error("Socket connection is not open");
@@ -38,7 +43,7 @@ export default function SocketClient(props: { start: number }) {
 	}
 
 	function decrement() {
-		if (ws.readyState === WebSocket.OPEN) {
+		if (ws?.readyState === WebSocket.OPEN) {
 			ws.send("decrement");
 		} else {
 			console.error("Socket connection is not open");
@@ -46,7 +51,7 @@ export default function SocketClient(props: { start: number }) {
 	}
 
 	function reset() {
-		if (ws.readyState === WebSocket.OPEN) {
+		if (ws?.readyState === WebSocket.OPEN) {
 			ws.send("reset");
 		} else {
 			console.error("Socket connection is not open");
