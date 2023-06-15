@@ -20,11 +20,13 @@ export default function MessageList(props: { messages: Message[] }) {
 			if (typeof body === "string" && body.startsWith("delete:")) {
 				// Delete message
 				const id = body.split(":")[1];
-				setMessages(messages.filter((msg) => msg.id !== id));
+				setMessages((prevMessages) =>
+					prevMessages.filter((msg) => msg.id !== id)
+				);
 			} else {
 				// Add new message
 				const newMsg = body as Message;
-				setMessages([newMsg, ...messages]);
+				setMessages((prevMessages) => [newMsg, ...prevMessages]);
 			}
 		};
 
