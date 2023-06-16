@@ -15,7 +15,7 @@ export default function NewMessage() {
 		<form
 			action="/messages"
 			method="POST"
-			class="flex flex-col gap-1 sm:items-center"
+			class="flex flex-col gap-2 sm:items-center"
 		>
 			<h2 class="text-xl font-bold">New Message</h2>
 			<textarea
