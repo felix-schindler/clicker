@@ -49,7 +49,12 @@ export default function MessageList(props: { messages: Message[] }) {
 
 	return (
 		<>
-			<h2 class="text-xl font-bold">Messages</h2>
+			<div class="flex flex-wrap gap-2 items-baseline">
+				<h2 class="text-xl font-bold">Messages</h2>
+				<p class="text-sm text-gray-700 dark:text-gray-300">
+					Realtime across the world
+				</p>
+			</div>
 			{messages.length === 0
 				? (
 					<p class="flex gap-1">

@@ -59,11 +59,19 @@ export default function SocketClient(props: { start: number }) {
 	}
 
 	return (
-		<div class="flex items-center gap-2 w-full">
-			<p class="flex-grow-1 text-lg font-mono">{count}</p>
-			<Button danger={true} onClick={reset}>Reset</Button>
-			<Button onClick={decrement}>-1</Button>
-			<Button onClick={increment}>+1</Button>
-		</div>
+		<>
+			<div class="flex flex-wrap gap-2 items-baseline">
+				<h2 class="text-xl font-bold">Counter</h2>
+				<p class="text-sm text-gray-700 dark:text-gray-300">
+					Realtime across the world
+				</p>
+			</div>
+			<div class="flex items-center gap-2 w-full">
+				<p class="flex-grow-1 text-lg font-mono">{count}</p>
+				<Button danger={true} onClick={reset}>Reset</Button>
+				<Button onClick={decrement}>-1</Button>
+				<Button onClick={increment}>+1</Button>
+			</div>
+		</>
 	);
 }
