@@ -12,6 +12,12 @@ export const handler: Handlers = {
 		const { socket, response } = Deno.upgradeWebSocket(req);
 		const channel = new BroadcastChannel("messages");
 
+		channel.onmessage = (event) => {
+			if (socket.readyState === WebSocket.OPEN) {
+				socket.send(event.data);
+			}
+		};
+
 		socket.onmessage = async (event) => {
 			if (typeof event.data === "string" && event.data.startsWith("delete")) {
 				const id = event.data.split(":")[1];
@@ -38,12 +44,6 @@ export const handler: Handlers = {
 			}
 			channel.postMessage(`delete:${id}`);
 		});
-
-		channel.onmessage = (event) => {
-			if (socket.readyState === WebSocket.OPEN) {
-				socket.send(event.data);
-			}
-		};
 
 		return response;
 	},

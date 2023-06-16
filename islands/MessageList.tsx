@@ -25,9 +25,11 @@ export default function MessageList(props: { messages: Message[] }) {
 					prevMessages.filter((msg) => msg.id !== id)
 				);
 			} else {
-				// Add new message
 				const newMsg = JSON.parse(body) as Message;
-				setMessages((prevMessages) => [newMsg, ...prevMessages]);
+				// Add new message if not already in list
+				if (!messages.find((msg) => msg.id === newMsg.id)) {
+					setMessages((prevMessages) => [...prevMessages, newMsg]);
+				}
 			}
 		};
 
