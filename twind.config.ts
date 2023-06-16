@@ -11,6 +11,9 @@ export default {
 				green: {
 					950: "#052e16", // in tailwind but not twind(?)
 				},
+				red: {
+					950: "#450a0a", // in tailwind but not twind(?)
+				},
 			},
 		},
 	},
