@@ -1,5 +1,5 @@
-import { AppProps } from '$fresh/server.ts';
-import { Head } from '$fresh/runtime.ts';
+import { AppProps } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
 import NavLink from "../components/NavLink.tsx";
 
 export default function App(props: AppProps) {
@@ -44,7 +44,11 @@ export default function App(props: AppProps) {
 					</p>
 					<nav class="flex gap-2 justify-center mt-2">
 						<NavLink href="/" content="Start" active={props.route == "/"} />
-						<NavLink href="/messages" content="Message board" active={props.route == "/messages"} />
+						<NavLink
+							href="/messages"
+							content="Message board"
+							active={props.route == "/messages"}
+						/>
 					</nav>
 				</header>
 				<main class="p-4 flex flex-col gap-4">
