@@ -16,9 +16,9 @@ export default function MessageList(props: { messages: Message[] }) {
 		const newWs = new WebSocket(`${wsProtocol}://${host}/api/messages`);
 
 		newWs.onmessage = (event) => {
-			const body: unknown = event.data;
+			const body: string = event.data;
 
-			if (typeof body === "string" && body.startsWith("delete:")) {
+			if (body.startsWith("delete:")) {
 				// Delete message
 				const id = body.split(":")[1];
 				setMessages((prevMessages) =>
@@ -26,7 +26,7 @@ export default function MessageList(props: { messages: Message[] }) {
 				);
 			} else {
 				// Add new message
-				const newMsg = body as Message;
+				const newMsg = JSON.parse(body) as Message;
 				setMessages((prevMessages) => [newMsg, ...prevMessages]);
 			}
 		};

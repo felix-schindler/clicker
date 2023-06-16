@@ -24,7 +24,7 @@ export const handler: Handlers = {
 			const msg = event.detail;
 
 			if (socket.readyState === WebSocket.OPEN) {
-				socket.send(msg);
+				socket.send(JSON.stringify(msg));
 			}
 			channel.postMessage(msg);
 		});
