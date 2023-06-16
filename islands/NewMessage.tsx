@@ -27,11 +27,11 @@ export default function NewMessage() {
 				onKeyDown={handleSubmit}
 			>
 			</textarea>
-			<div class="flex flex-row-reverse sm:flex-row flex-wrap gap-1 items-center justify-end">
-				<Button class="flex-grow sm:flex-grow-0" type="submit">Add</Button>
+			<div class="flex gap-1 items-center justify-end">
 				<Button class="flex-grow sm:flex-grow-0" type="reset" danger={true}>
 					Clear
 				</Button>
+				<Button class="flex-grow sm:flex-grow-0" type="submit">Add</Button>
 			</div>
 		</form>
 	);
