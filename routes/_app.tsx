@@ -55,15 +55,35 @@ export default function App(props: AppProps) {
 					{<props.Component />}
 				</main>
 				<footer class="p-4">
-					<p>
-						Made by{" "}
-						<a class="hover:text-underline" href="https://schindlerfelix.de">
-							Felix
-						</a>
-					</p>
-					<a href="https://fresh.deno.dev">
-						<img src="/fresh-badge.svg" alt="Made with Fresh" />
-					</a>
+					<div class="flex flex-wrap justify-between">
+						<div>
+							<p>
+								Made by{" "}
+								<a
+									class="hover:text-underline"
+									href="https://schindlerfelix.de"
+								>
+									Felix
+								</a>
+							</p>
+							<a href="https://fresh.deno.dev">
+								<img src="/fresh-badge.svg" alt="Made with Fresh" />
+							</a>
+						</div>
+						<div class="text-sm">
+							<h3 class="font-semibold">Keyboard Shortcuts</h3>
+							<span>Submit&nbsp;form&nbsp;</span>
+							<span class="text-xs">
+								<kbd class="px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+									⌘
+								</kbd>&nbsp;
+								<span>+</span>&nbsp;
+								<kbd class="px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+									↵
+								</kbd>
+							</span>
+						</div>
+					</div>
 				</footer>
 			</body>
 		</>
