@@ -2,7 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import { Button } from "../components/Button.tsx";
 
 export default function SocketPing() {
-	const [answer, setAnswer] = useState("/");
+	const [answer, setAnswer] = useState("----");
 	const [ws, setWs] = useState<WebSocket | null>(null);
 
 	// Initialize websocket connection on the client
@@ -29,7 +29,7 @@ export default function SocketPing() {
 	}, []);
 
 	function reset() {
-		setAnswer("/");
+		setAnswer("----");
 	}
 
 	function sendPing() {
@@ -41,10 +41,11 @@ export default function SocketPing() {
 	}
 
 	return (
-		<div class="flex items-center gap-2 w-full">
-			<p class="flex-grow-1 text-lg font-mono">{answer}</p>
-			<Button onClick={reset} danger={true}>Reset</Button>
-			<Button onClick={sendPing}>Ping!</Button>
+		<div class="flex flex-wrap gap-2 items-center font-mono">
+			{answer === "----"
+				? <Button onClick={sendPing}>Ping!</Button>
+				: <Button onClick={reset} danger={true}>Reset</Button>}
+			<p class="text-lg">{answer}</p>
 		</div>
 	);
 }
