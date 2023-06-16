@@ -2,22 +2,24 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/api/count.ts";
-import * as $1 from "./routes/api/messages.ts";
-import * as $2 from "./routes/api/ping.ts";
-import * as $3 from "./routes/index.tsx";
-import * as $4 from "./routes/messages.tsx";
+import * as $0 from "./routes/_app.tsx";
+import * as $1 from "./routes/api/count.ts";
+import * as $2 from "./routes/api/messages.ts";
+import * as $3 from "./routes/api/ping.ts";
+import * as $4 from "./routes/index.tsx";
+import * as $5 from "./routes/messages.tsx";
 import * as $$0 from "./islands/MessageList.tsx";
 import * as $$1 from "./islands/SocketCounter.tsx";
 import * as $$2 from "./islands/SocketPing.tsx";
 
 const manifest = {
 	routes: {
-		"./routes/api/count.ts": $0,
-		"./routes/api/messages.ts": $1,
-		"./routes/api/ping.ts": $2,
-		"./routes/index.tsx": $3,
-		"./routes/messages.tsx": $4,
+		"./routes/_app.tsx": $0,
+		"./routes/api/count.ts": $1,
+		"./routes/api/messages.ts": $2,
+		"./routes/api/ping.ts": $3,
+		"./routes/index.tsx": $4,
+		"./routes/messages.tsx": $5,
 	},
 	islands: {
 		"./islands/MessageList.tsx": $$0,
