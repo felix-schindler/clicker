@@ -54,11 +54,6 @@ export const handler: Handlers = {
 					socket.send(count.toString());
 					break;
 				}
-				case "reset": {
-					await db.setCount(0);
-					socket.send("0");
-					break;
-				}
 				default:
 					socket.send("Unknown event");
 					break;

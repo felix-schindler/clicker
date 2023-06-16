@@ -50,14 +50,6 @@ export default function SocketClient(props: { start: number }) {
 		}
 	}
 
-	function reset() {
-		if (ws?.readyState === WebSocket.OPEN) {
-			ws.send("reset");
-		} else {
-			console.error("Socket connection is not open");
-		}
-	}
-
 	return (
 		<>
 			<div class="flex flex-wrap gap-2 items-baseline">
@@ -68,8 +60,7 @@ export default function SocketClient(props: { start: number }) {
 			</div>
 			<div class="flex items-center gap-2 w-full">
 				<p class="flex-grow-1 text-lg font-mono">{count}</p>
-				<Button danger={true} onClick={reset}>Reset</Button>
-				<Button onClick={decrement}>-1</Button>
+				<Button onClick={decrement} danger={true}>-1</Button>
 				<Button onClick={increment}>+1</Button>
 			</div>
 		</>
