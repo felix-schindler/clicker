@@ -66,17 +66,4 @@ export const handler: Handlers = {
 
 		return response;
 	},
-
-	async POST(req) {
-		const increment = Boolean(new URL(req.url).searchParams.get("increment"));
-		let count = await db.getCount();
-
-		if (increment) {
-			await db.setCount(++count);
-		} else {
-			await db.setCount(--count);
-		}
-
-		return new Response();
-	},
 };
