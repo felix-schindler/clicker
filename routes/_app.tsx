@@ -1,6 +1,7 @@
 import { AppProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import NavLink from "../components/NavLink.tsx";
+import SocketPing from "../islands/SocketPing.tsx";
 
 export default function App(props: AppProps) {
 	return (
@@ -54,11 +55,14 @@ export default function App(props: AppProps) {
 				<main class="p-4 flex flex-col gap-4">
 					{<props.Component />}
 				</main>
-				<footer class="p-4">
-					<a class="mx-auto" href="https://fresh.deno.dev">
-						<img class="mx-auto" src="/fresh-badge.svg" alt="Made with Fresh" />
-					</a>
-					<div class="flex flex-wrap mt-2 gap-8 justify-center text-sm">
+				<footer class="p-4 text-sm">
+					<div class="flex flex-col items-center gap-1">
+						<SocketPing />
+						<p class="font-xs ml-2 text-sm text-gray-700 dark:text-gray-400">
+							If something isn't updating, try to ping the server
+						</p>
+					</div>
+					<div class="mt-3 flex flex-wrap gap-8 justify-center items-center">
 						<div>
 							<h3 class="font-semibold">Made by</h3>
 							<a
