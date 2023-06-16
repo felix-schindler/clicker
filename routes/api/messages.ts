@@ -21,10 +21,10 @@ export const handler: Handlers = {
 
 		db.addEventListener("newMessage", (event) => {
 			// @ts-ignore It's a custom event, detail does exist!
-			const msg = event.detail;
+			const msg = JSON.stringify(event.detail);
 
 			if (socket.readyState === WebSocket.OPEN) {
-				socket.send(JSON.stringify(msg));
+				socket.send(msg);
 			}
 			channel.postMessage(msg);
 		});
