@@ -55,29 +55,27 @@ export default function App(props: AppProps) {
 					{<props.Component />}
 				</main>
 				<footer class="p-4">
-					<div class="flex flex-wrap justify-between">
+					<a class="mx-auto" href="https://fresh.deno.dev">
+						<img class="mx-auto" src="/fresh-badge.svg" alt="Made with Fresh" />
+					</a>
+					<div class="flex flex-wrap mt-2 gap-8 justify-center text-sm">
 						<div>
-							<p>
-								Made by{" "}
-								<a
-									class="hover:text-underline"
-									href="https://schindlerfelix.de"
-								>
-									Felix
-								</a>
-							</p>
-							<a href="https://fresh.deno.dev">
-								<img src="/fresh-badge.svg" alt="Made with Fresh" />
+							<h3 class="font-semibold">Made by</h3>
+							<a
+								class="hover:text-underline"
+								href="https://schindlerfelix.de"
+							>
+								Felix
 							</a>
 						</div>
-						<div class="text-sm">
-							<h3 class="font-semibold">Keyboard Shortcuts</h3>
-							<span>Submit&nbsp;form&nbsp;</span>
+						<div>
+							<h3 class="mt-1 font-semibold">Keyboard Shortcuts</h3>
+							<span>Submit form</span>{" "}
 							<span class="text-xs">
 								<kbd class="px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
 									⌘
-								</kbd>&nbsp;
-								<span>+</span>&nbsp;
+								</kbd>{" "}
+								<span>+</span>{" "}
 								<kbd class="px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
 									↵
 								</kbd>
