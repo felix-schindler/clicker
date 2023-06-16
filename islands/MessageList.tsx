@@ -18,19 +18,17 @@ export default function MessageList(props: { messages: Message[] }) {
 		newWs.onmessage = (event) => {
 			const body: string = event.data;
 
-			if (body.startsWith("delete:")) {
-				// Delete message
-				const id = body.split(":")[1];
-				setMessages((prevMessages) =>
-					prevMessages.filter((msg) => msg.id !== id)
-				);
-			} else {
-				const newMsg = JSON.parse(body) as Message;
-				// Add new message if not already in list
-				if (!messages.find((msg) => msg.id === newMsg.id)) {
-					setMessages((prevMessages) => [...prevMessages, newMsg]);
+			setMessages((prevMessages) => {
+				if (body.startsWith("delete:")) {
+					// Delete message
+					const id = body.split(":")[1];
+					return prevMessages.filter((msg) => msg.id !== id);
+				} else {
+					// Add new message to bottom of list
+					const newMsg = JSON.parse(body) as Message;
+					return [...prevMessages, newMsg];
 				}
-			}
+			});
 		};
 
 		setWs(newWs);
@@ -62,8 +60,8 @@ export default function MessageList(props: { messages: Message[] }) {
 					<ul class="divide-y">
 						{messages.map((msg) => {
 							return (
-								<li class="flex flex-wrap py-1">
-									<span class="flex-grow">{msg.content}</span>
+								<li class="flex items-start justify-between py-1">
+									<span>{msg.content}</span>
 									<button
 										class="text-red-500"
 										type="button"
