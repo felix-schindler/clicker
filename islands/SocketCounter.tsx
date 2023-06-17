@@ -59,7 +59,7 @@ export default function SocketCounter(props: { start: number }) {
 						text-3xl lg:text-6xl font-bold
 						py-2 px-4 rounded-full
 						bg-green-400 hover:bg-green-500 dark:bg-green-600
-						h-60 w-60
+						h-72 w-72
 						lg:h-96 lg:w-96
 						transition duration-100 active:scale-105"
 					onClick={increment}
@@ -72,14 +72,14 @@ export default function SocketCounter(props: { start: number }) {
 				<button
 					type="button"
 					class="
-					px-2 py-1
+					px-2 py-1 text-sm
 					border(red-500 2) rounded-full
 					hover:bg-red-50 active:bg-red-100
 					dark:bg-red-950 dark:hover:bg-red-900 dark:active:bg-red-800
 					transition duration-100 active:scale-95"
 					onClick={decrement}
 				>
-					Decrement
+					Decrease
 				</button>
 			</div>
 		</>

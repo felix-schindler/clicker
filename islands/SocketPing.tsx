@@ -45,7 +45,7 @@ export default function SocketPing() {
 			{answer === "----"
 				? <Button onClick={sendPing}>Ping!</Button>
 				: <Button onClick={reset} danger={true}>Reset</Button>}
-			<p class="text-lg">{answer}</p>
+			<p>{answer}</p>
 		</div>
 	);
 }

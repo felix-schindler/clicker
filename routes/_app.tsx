@@ -44,11 +44,11 @@ export default function App(props: AppProps) {
 						using Deno Deploy, Fresh, Deno KV, BroadcastChannel and WebSockets
 					</p>
 					<nav class="flex gap-2 justify-center mt-2">
-						<NavLink href="/" content="Start" active={props.route == "/"} />
+						<NavLink href="/" content="Start" active={props.route === "/"} />
 						<NavLink
 							href="/messages"
 							content="Message board"
-							active={props.route == "/messages"}
+							active={props.route === "/messages"}
 						/>
 					</nav>
 				</header>
@@ -58,7 +58,7 @@ export default function App(props: AppProps) {
 				<footer class="p-4 text-sm">
 					<div class="flex flex-col items-center gap-1">
 						<SocketPing />
-						<p class="font-xs ml-2 text-sm text-gray-700 dark:text-gray-400">
+						<p class="text-xs ml-2 text-gray-700 dark:text-gray-400">
 							If something isn't updating, try to ping the server
 						</p>
 					</div>
@@ -75,7 +75,7 @@ export default function App(props: AppProps) {
 						<div>
 							<h3 class="mt-1 font-semibold">Keyboard Shortcuts</h3>
 							<span>Submit form</span>{" "}
-							<span class="text-xs">
+							<span>
 								<kbd class="px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
 									⌘
 								</kbd>{" "}
