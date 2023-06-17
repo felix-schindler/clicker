@@ -1,5 +1,6 @@
 import { AppProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
+
 import NavLink from "../components/NavLink.tsx";
 import SocketPing from "../islands/SocketPing.tsx";
 

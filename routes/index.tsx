@@ -1,4 +1,5 @@
 import type { Handlers, PageProps } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
 import { CounterModel } from "../utils/db.ts";
 
 import SocketCounter from "../islands/SocketCounter.tsx";
@@ -14,5 +15,15 @@ export const handler: Handlers<HomeProps> = {
 };
 
 export default function Home(props: PageProps<HomeProps>) {
-	return <SocketCounter start={props.data.start} />;
+	return (
+		<>
+			<Head>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0, user-scalable=no"
+				/>
+			</Head>
+			<SocketCounter start={props.data.start} />
+		</>
+	);
 }
