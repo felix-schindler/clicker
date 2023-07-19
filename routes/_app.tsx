@@ -10,6 +10,7 @@ export default function App(props: AppProps) {
 			<Head>
 				<title>Counter</title>
 				{/* "PWA" */}
+				<meta name="view-transition" content="same-origin" />
 				<meta name="color-scheme" content="dark light" />
 				<meta
 					name="theme-color"

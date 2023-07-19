@@ -14,7 +14,5 @@ export const handler: Handlers<HomeProps> = {
 };
 
 export default function Home(props: PageProps<HomeProps>) {
-	return (
-		<SocketCounter start={props.data.start} />
-	);
+	return <SocketCounter start={props.data.start} />;
 }
