@@ -1,4 +1,4 @@
-import { Filter } from "bad-words";
+import Filter from "bad-words";
 
 const kv = await Deno.openKv();
 
@@ -84,10 +84,7 @@ export class MessageModel extends EventTarget {
 		// Remove bad words
 		try {
 			content = this.filter.clean(content);
-		} catch {
-
-			/* Sometimes throws a tantrum 🤷🏻‍♀️ (e. g. content === "$$$") */
-		}
+		} catch { /* Sometimes throws a tantrum 🤷🏻‍♀️ (e. g. content === "$$$") */ }
 
 		// Create "unique" id
 		const id = Date.now() + crypto.randomUUID().split("-")[0];
